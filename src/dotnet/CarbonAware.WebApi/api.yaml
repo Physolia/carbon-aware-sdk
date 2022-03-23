@@ -1,0 +1,98 @@
+openapi: 3.0.0
+info:
+  description: 'Carbon Aware REST API'
+  version: 0.1.0
+  title: Carbon Aware REST API
+
+paths:
+  '/sci-scores':
+    post:
+      summary: Calculate the SCI score using the configured plugins
+      description: ''
+      operationId: calculateSciScore
+      requestBody:
+        '$ref': '#/components/requestBodies/SciScoreCalculation'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  '$ref': '#/components/schemas/SciScore'
+
+components:
+  requestBodies:
+    SciScoreCalculation:
+      content:
+        application/json:
+          schema:
+            '$ref': '#/components/schemas/SciScoreCalculation'
+      description: Sci Score calculation component payload for configured plugins
+      required: true
+  schemas:
+    SciScore:
+      type: object
+      properties:
+        sciScore:
+          type: number
+          format: float
+        energyValue:
+          type: number
+          format: float
+        marginalCarbonIntensityValue:
+          type: number
+          format: float
+        embodiedEmissions:
+          type: number
+          format: float
+        functionalUnit:
+          type: integer
+          format: int64
+    
+    SciScoreCalculation:
+      type: object
+      properties:
+        energy:
+          '$ref': '#/components/schemas/EnergyCalculatorRaw'
+        marginalCarbonIntensity:
+          '$ref': '#/components/schemas/MarginalCarbonIntensityCalculatorAZWattTime'
+        embodiedEmissions:
+          '$ref': '#/components/schemas/EmbodiedEmissionsCalculatorRaw'
+        functionalUnit:
+          '$ref': '#/components/schemas/FunctionalUnitCalculatorRaw'
+
+    EnergyCalculatorRaw:
+      type: object
+        properties:
+          value:
+            type: number
+            format: float
+
+    MarginalCarbonIntensityCalculatorAZWattTime:
+      type: object
+        properties:
+          azRegion:
+            type: string
+            enum:
+              - northeurope
+              - westeurope
+          duration:
+            type: string
+            description: ISO8601 formatted [time interval](https://en.wikipedia.org/wiki/ISO_8601#Time_intervals)
+            example: 2007-03-01T13:00:00Z/2007-03-01T15:30:00Z
+    
+    EmbodiedEmissionsCalculatorRaw:
+      type: object
+        properties:
+          value:
+            type: number
+            format: float
+
+    FunctionalUnitCalculatorRaw:
+      type: object
+        properties:
+          value:
+            type: number
+            format: float
