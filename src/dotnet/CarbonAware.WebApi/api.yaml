@@ -12,6 +12,9 @@ paths:
       operationId: calculateSciScore
       requestBody:
         '$ref': '#/components/requestBodies/SciScoreCalculation'
+        examples: 
+          sci-score-calculation:
+            '$ref': '#/components/examples/sci-score-calc-example'
       responses:
         '200':
           description: successful operation
@@ -21,6 +24,9 @@ paths:
                 type: object
                 items:
                   '$ref': '#/components/schemas/SciScore'
+              examples: 
+                sci-score-response:
+                  '$ref': '#/components/examples/sci-score-response-example'
 
 components:
   requestBodies:
@@ -96,3 +102,24 @@ components:
           value:
             type: number
             format: float
+  examples:
+    sci-score-calc-example:
+      summary: A calculation payload example using a logic plugin for (I) and raw values for (E,M, & R).
+      value: {
+        "energy": { "value": 1.0 },
+        "marginalCarbonIntensity": { 
+          "azRegion": "northeurope",
+          "duration": "2022-03-01T13:00:00Z/2022-03-01T13:30:00Z"
+        },
+        "embodiedEmissions": { "value": 0.0 },
+        "functionalUnit": { "value": 1 }
+      }
+    sci-score-response-example:
+      summary: An example response from an SCI score calculation request
+      value: {
+        "sciScore": 750.0
+        "energyValue": 1.0 ,
+        "marginalCarbonIntensityValue": 750,
+        "embodiedEmissionsValue": 0.0 ,
+        "functionalUnitValue": 1 
+      }
