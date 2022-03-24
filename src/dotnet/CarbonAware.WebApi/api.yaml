@@ -56,7 +56,7 @@ components:
         functionalUnit:
           type: integer
           format: int64
-    
+
     SciScoreCalculation:
       type: object
       properties:
@@ -71,37 +71,37 @@ components:
 
     EnergyCalculatorRaw:
       type: object
-        properties:
-          value:
-            type: number
-            format: float
+      properties:
+        value:
+          type: number
+          format: float
 
     MarginalCarbonIntensityCalculatorAZWattTime:
       type: object
-        properties:
-          azRegion:
-            type: string
-            enum:
-              - northeurope
-              - westeurope
-          duration:
-            type: string
-            description: ISO8601 formatted [time interval](https://en.wikipedia.org/wiki/ISO_8601#Time_intervals)
-            example: 2007-03-01T13:00:00Z/2007-03-01T15:30:00Z
-    
+      properties:
+        azRegion:
+          type: string
+          enum:
+            - northeurope
+            - westeurope
+        duration:
+          type: string
+          description: ISO8601 formatted [time interval](https://en.wikipedia.org/wiki/ISO_8601#Time_intervals)
+          example: 2007-03-01T13:00:00Z/2007-03-01T15:30:00Z
+
     EmbodiedEmissionsCalculatorRaw:
       type: object
-        properties:
-          value:
-            type: number
-            format: float
+      properties:
+        value:
+          type: number
+          format: float
 
     FunctionalUnitCalculatorRaw:
       type: object
-        properties:
-          value:
-            type: number
-            format: float
+      properties:
+        value:
+          type: number
+          format: float
   examples:
     sci-score-calc-example:
       summary: A calculation payload example using a logic plugin for (I) and raw values for (E,M, & R).
@@ -117,9 +117,9 @@ components:
     sci-score-response-example:
       summary: An example response from an SCI score calculation request
       value: {
-        "sciScore": 750.0
-        "energyValue": 1.0 ,
+        "sciScore": 750.0,
+        "energyValue": 1.0,
         "marginalCarbonIntensityValue": 750,
-        "embodiedEmissionsValue": 0.0 ,
+        "embodiedEmissionsValue": 0.0,
         "functionalUnitValue": 1 
       }
