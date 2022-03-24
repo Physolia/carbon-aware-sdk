@@ -11,7 +11,7 @@ paths:
       description: ''
       operationId: calculateSciScore
       requestBody:
-        '$ref': '#/components/requestBodies/SciScoreCalculation'
+        '$ref': '#/components/requestBodies/SciScoreCalculationPlugin'
         examples: 
           sci-score-calculation:
             '$ref': '#/components/examples/sci-score-calc-example'
@@ -30,12 +30,12 @@ paths:
 
 components:
   requestBodies:
-    SciScoreCalculation:
+    SciScoreCalculationPlugin:
       content:
         application/json:
           schema:
-            '$ref': '#/components/schemas/SciScoreCalculation'
-      description: Sci Score calculation component payload for configured plugins
+            '$ref': '#/components/schemas/SciScoreCalculationPlugin'
+      description: Sci Score calculation component payload for configured plugin
       required: true
   schemas:
     SciScore:
@@ -57,26 +57,7 @@ components:
           type: integer
           format: int64
 
-    SciScoreCalculation:
-      type: object
-      properties:
-        energy:
-          '$ref': '#/components/schemas/EnergyCalculatorRaw'
-        marginalCarbonIntensity:
-          '$ref': '#/components/schemas/MarginalCarbonIntensityCalculatorAZWattTime'
-        embodiedEmissions:
-          '$ref': '#/components/schemas/EmbodiedEmissionsCalculatorRaw'
-        functionalUnit:
-          '$ref': '#/components/schemas/FunctionalUnitCalculatorRaw'
-
-    EnergyCalculatorRaw:
-      type: object
-      properties:
-        value:
-          type: number
-          format: float
-
-    MarginalCarbonIntensityCalculatorAZWattTime:
+    SciScoreCalculationPlugin:
       type: object
       properties:
         azRegion:
@@ -88,38 +69,20 @@ components:
           type: string
           description: ISO8601 formatted [time interval](https://en.wikipedia.org/wiki/ISO_8601#Time_intervals)
           example: 2007-03-01T13:00:00Z/2007-03-01T15:30:00Z
-
-    EmbodiedEmissionsCalculatorRaw:
-      type: object
-      properties:
-        value:
-          type: number
-          format: float
-
-    FunctionalUnitCalculatorRaw:
-      type: object
-      properties:
-        value:
-          type: number
-          format: float
+    
   examples:
     sci-score-calc-example:
-      summary: A calculation payload example using a logic plugin for (I) and raw values for (E,M, & R).
+      summary: A calculation payload example using a plugin which only calculates for (I) and uses default values for (E,M, & R).
       value: {
-        "energy": { "value": 1.0 },
-        "marginalCarbonIntensity": { 
-          "azRegion": "northeurope",
-          "duration": "2022-03-01T13:00:00Z/2022-03-01T13:30:00Z"
-        },
-        "embodiedEmissions": { "value": 0.0 },
-        "functionalUnit": { "value": 1 }
+        "azRegion": "northeurope",
+        "duration": "2022-03-01T13:00:00Z/2022-03-01T13:30:00Z"
       }
     sci-score-response-example:
       summary: An example response from an SCI score calculation request
       value: {
         "sciScore": 750.0,
         "energyValue": 1.0,
-        "marginalCarbonIntensityValue": 750,
+        "marginalCarbonIntensityValue": 750.0,
         "embodiedEmissionsValue": 0.0,
         "functionalUnitValue": 1 
       }
