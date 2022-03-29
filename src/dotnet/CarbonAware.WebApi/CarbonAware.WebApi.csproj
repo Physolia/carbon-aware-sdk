@@ -31,6 +31,9 @@
       <TreatAsUsed>true</TreatAsUsed>
     </ProjectReference>
     <ProjectReference Include="..\CarbonAware\CarbonAware.csproj" />
+    <ProjectReference Include="..\CarbonAware.Plugins.WattTime\CarbonAware.Plugins.WattTime.csproj">
+      <TreatAsUsed>true</TreatAsUsed>
+    </ProjectReference>
   </ItemGroup>
 
   <ItemGroup>
